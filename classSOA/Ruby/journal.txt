@@ -1,0 +1,167 @@
+> help
+> 2+6
+=> 8
+Success!
+
+> next
+> "karla"
+=> "karla"
+Success!
+> "karla".re¬verse
+=> "alrak"
+Success!
+> "karla".le¬ngth
+=> 5
+Success!
+> "karla"*5
+=> "karlakarlakarlakarlakarla"
+Successfully completed the Challenge!
+
+> 40.reverse¬
+=> #<NoMethodError: undefined method `reverse' for 40:Fixnum>
+Oh no!
+> 40.to_s.re¬verse
+=> "04"
+That's better!
+>
+#to_s converts things to strings.
+#to_i converts things to integers 
+#to_a converts things to arrays.
+
+> [12,47,35]¬.max
+=> 47
+Success!
+> ticket=[12¬,47,35]
+=> [12, 47, 35]
+Success!
+> 
+
+> print poem
+=> "My toast has flown from my hand
+And my toast has gone to the moon.
+But when I saw it on television,
+Planting our flag on Halley's comet,
+More still did I want to eat it."
+Success!
+
+> poem['toas¬t']='honey¬dew'
+=> "honeydew"
+Success!
+
+#The two brackets are like sights used to line up a target.These brackets mean, "I am looking for ____." 
+#To just reverse the lines, though. Move the last line up to first and the first line down to last.
+#You turned the poem into a list using lines.to_a. lines decides the way the string is split up, then to_a converted it into an Array.Different methods, such as bytes and chars can be used in place of lines. By using lines, ruby will return each line of the poem.
+#Then, you reversed that list. You had each line. You reversed them.
+
+> print poem.¬lines.to_a¬.reverse.j¬oin
+More still did I want to eat it.
+Planting our flag on Halley's comet,
+But when I saw it on television,
+And my honeydew has gone to the moon.
+My honeydew has flown from my hand
+Success!
+>  
+
+#The join method took that list of reversed lines and put them together into a string. (could have also just used to_s.)
+
+> books={}
+=> {}
+Success!
+
+> books["Gra¬vity's Rainb¬ow"] =:spl¬endid
+=> :splendid
+Success!
+
+> books["Gra¬vity's Rainb¬ow. Harry¬ Potte¬r, DaVin¬ci Code"¬] 
+=> nil
+> books["Har¬ry Potte¬r"] =:med¬iocre  #Here I added another book to review
+=> :mediocre
+> books.leng¬th
+=> 2
+> books["Gra¬vity's Rainb¬ow"]
+=> :splendid
+Success!
+> books.keys¬
+=> ["Gravity's Rainbow", "Harry Potter"]
+> books["Dav¬inci Code"¬] :=aby¬smal
+=> The code you submitted was not valid Ruby.
+> books["Dav¬inci Code"¬] =:aby¬smal
+=> :abysmal
+> books.keys¬
+=> ["Gravity's Rainbow", "Harry Potter", "Davinci Code"]
+> books.leng¬th
+=> 3
+> 5.times{pr¬int"odelay¬!"}
+=> "odelay!odelay!odelay!odelay!odelay!"
+Not enough Odelay!
+> "odelay!"*¬5
+=> "odelay!odelay!odelay!odelay!odelay!"
+Not enough Odelay!
+>  
+
+#Blocks are always attached to methods. Like the timesmethod, which takes the block and runs the code over and over. (In this case: five times.)
+#This last lesson was a bit longer. You've probably used up three minutes learning about:
+#Hashes. The little dictionary with the curly pages: {}.
+#Symbols. Tiny, efficient code words with a colon::splendid.
+#Blocks. Chunks of code which can be tacked on to many of Ruby's methods. Here's the code you used to build a scorecard:books.values.each { |rate| ratings[rate] += 1 }.
+
+
+> Dir.entrie­s "/"
+=> [".", "..", "Home", "Libraries", "MouseHole", "Programs", "Tutorials", "comics.txt"]
+Success!
+> 
+
+#list out everything in the top directory. entries is a method called on the Dir variable. And Dir has a collection of methods for checking out file directories.
+#The "/" just means root directory, I tried it with just "" and printed out the same
+
+#to searcg for a .txt file in Dir
+
+> Dir["/*.tx­t"]
+=> ["/comics.txt"]
+
+#to open the file
+
+> print File.­read("/com­ics.txt")
+=> "Achewood: http://achewood.com/
+Dinosaur Comics: http://qwantz.com/
+Perry Bible Fellowship: http://cheston.com/pbf/archive.html
+Get Your War On: http://mnftiu.cc/
+"
+
+#to copy the file to the home directory
+
+> FileUtils.­cp('/comic­s.txt','/H­ome/comics­.txt')
+=> nil
+Success!
+
+
+#to open a File and add something to the list of comics
+
+
+> File.open(­"/Home/com­ics.txt","­a") do |f|
+..	f<< "Cat and girl:­ http:­//catandgi­rl.com/"
+..	end
+=> #<File:/Home/comics.txt (closed)>
+>  
+
+#to see the time of the file
+
+> File.mtime­("/Home/co­mics.txt")­
+=> 2013-10-01 15:29:23 +0000
+Success!
+> 
+
+#Arguments are a list of things sent into a method. With commas between.
+#do and end are another way to make a block.
+
+> def load_comics( path )                    #to make my own method def followed by the name of the method
+..	comics = {}
+..	File.forea­ch(path) do |line­|
+....	name, url = line.­split(': ')
+....	comics[nam­e] = url.s­trip
+....	 end
+..	comics
+..	end
+=> nil 
+
+> comics = load_­comics('/c­omics.txt'­)     #to use the new method created
