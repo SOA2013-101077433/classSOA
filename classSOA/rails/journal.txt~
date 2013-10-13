@@ -144,19 +144,4 @@ end
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
 
-#in app/views/layout
-#replace the application.html.erb file by application.html.haml that includes
-
-!!! 5
-%html
-  %head
-    %title Rotten Potatoes!
-    = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
-    = csrf_meta_tags
-
-  %body
-    = yield
-
-
    
