@@ -1,0 +1,55 @@
+#to create a new, empy rails app
+
+>rails new app_name     #succesful if you see the message "your bundle is complete"
+
+#this creates a new directory for our app with several folders
+#gemfile specifies what gems our app depends on
+
+>rails server    #to start the app
+
+#open the routes.rb file in the config folder created to change the routes and replaced it with: 
+
+Myrottenpotatoes::Application.routes.draw do
+	resoures :movies
+	root :to =>redirect('/movies')
+end
+
+#Databases and Migrations
+
+#rails is configured by default to use SQLite3, defines 3 environments: production,development and test
+#a migration is aportable script for changing the database schema(layout) in a consistent and repeatable way
+#we use this to avoid having to write the code two times or when we use databases other SQLite3
+#three step process
+	1. Create migration describing whta changes to make
+	2.Apply the migration to the developmentdatabase.
+	3. Update the test database's schema by running rake db:test:prepare
+	4.Run tests
+
+>>rails generate migration create_movies
+
+#new file created under db/migrate
+ 
+change the file to the following, to create the table for movies
+
+class CreateMovies < ActiveRecord::Migration
+  def up
+     create_table 'movies' do |t|
+        t.string 'title'
+        t.string 'rating'
+        t.text 'desription' 
+        t.datetime 'release_date'
+        t.timestamps
+  end
+end 
+
+  def down
+ drop_table 'movies' 
+end
+end
+
+#type rake db:migrate to apply the migration and create the table
+
+
+
+
+   
