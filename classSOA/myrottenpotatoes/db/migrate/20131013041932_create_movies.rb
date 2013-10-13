@@ -6,6 +6,7 @@ class CreateMovies < ActiveRecord::Migration
 	t.text 'desription' 
 	t.datetime 'release_date'
 	t.timestamps		
+     attr_accesible :title :rating :release_date 
   end
 end 
 
