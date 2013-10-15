@@ -158,5 +158,52 @@ end
   %body
     = yield
 
+#How to create a new movie. go to the index.html.haml file in the views folder and add the following at the end
+
+= link_to 'Add new movie', new_movie_path
+
+#now we need to change the controllers that will be triggered when a user clicks on the lin we just created
+#go to the movies_controller.rb file and add a new method
+
+def new
+  # default: render 'new' template
+end
+
+
+#no we create the fill in form for entering a new movie
+#create new.html.haml file in the views/movies folder
+
+%h2 Create New Movie
+
+= form_tag movies_path, :method => :post do
+
+  = label :movie, :title, 'Title'
+  = text_field :movie, :title
+
+  = label :movie, :rating, 'Rating'
+  = select :movie, :rating, Movie.all_ratings  ##this didnt work for me! had to use ['g', 'pg-13', 'r', 'nc-17']
+ 
+  = label :movie, :release_date, 'Released On'
+  = date_select :movie, :release_date
+
+  = submit_tag 'Save Changes'
+
+#now define 'create' in moview_controllers.rb
+
+def create
+  @movie = Movie.create!(params[:movie])
+  redirect_to movies_path
+  flash[:notice] = "#{@movie.title} was successfully created."
+end
+
+#now add the following between %body and =yield on the application.html.haml file
+
+- if flash[:notice]
+  #notice.message= flash[:notice]
+- elsif flash[:warning]
+  #warning.message= flash[:warning]
+
+
+
 
    
