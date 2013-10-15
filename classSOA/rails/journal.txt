@@ -203,7 +203,58 @@ end
 - elsif flash[:warning]
   #warning.message= flash[:warning]
 
+#be careful with the identation! gave me a lot of problems :(
 
+#now we will try to do the update functionality so that users can edit the movies
+
+-# modify last 2 lines of app/views/movies/show.html.haml to:
+= link_to 'Edit info', edit_movie_path(@movie)
+= link_to 'Back to movie list', movies_path
+
+#now we need to create view for this: edit.html.haml which will be similar to our new view
+
+%h2 Edit Movie
+
+= form_tag movie_path(@movie), :method => :put do
+
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title'
+
+  = label :movie, :rating, 'Rating'
+  = select :movie, :rating, Movie.all_ratings
+ 
+  = label :movie, :release_date, 'Released On'
+  = date_select :movie, :release_date
+
+  = submit_tag 'Save Changes'
+
+
+#modify the movies_controller.rb to define the edit action
+
+def edit
+  @movie = Movie.find params[:id]
+end
+
+def update
+  @movie = Movie.find params[:id]
+  @movie.update_attributes!(params[:movie])
+  flash[:notice] = "#{@movie.title} was successfully updated."
+  redirect_to movie_path(@movie)
+end
+
+
+#DEFINE THE DESTROY ACTION IN MOVIES_CONTROLLER.RB
+
+def destroy
+  @movie = Movie.find(params[:id])
+  @movie.destroy
+  flash[:notice] = "Movie '#{@movie.title}' deleted."
+  redirect_to movies_path
+end
+
+#add the delete option in the show.html.haml view
+
+= button_to 'Delete', movie_path(@movie), :method => :delete, :confirm => 'Are you sure?'
 
 
    
