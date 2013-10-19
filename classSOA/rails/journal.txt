@@ -252,9 +252,41 @@ def destroy
   redirect_to movies_path
 end
 
+
+
 #add the delete option in the show.html.haml view
 
 = button_to 'Delete', movie_path(@movie), :method => :delete, :confirm => 'Are you sure?'
+
+
+#Try to use partial view to avoid having to repeat the same code like we did in edit and show views
+
+#first create the _movie_form.html.haml that inclueds:
+
+
+= label :movie, :title, 'Title'
+= text_field :movie, 'title'
+
+= label :movie, :rating, 'Rating'
+= select :movie, :rating, Movie.all_ratings
+
+= label :movie, :release_date, 'Released On'
+= date_select :movie, :release_date
+
+#now change the edit and new views to use the partial view
+
+%h2 Edit Existing Movie
+
+= form_tag movie_path(@movie), :method => :put do
+  = render :partial => 'movie_form'
+  = submit_tag 'Update Movie Info'
+
+
+%h2 Create New Movie
+
+= form_tag '/movies', :method => :post do
+  = render :partial => 'movie_form'
+  = submit_tag 'Save Changes'
 
 
    
