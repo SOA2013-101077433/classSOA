@@ -14,9 +14,13 @@ def new
 end
 
 def create
-  @movie = Movie.create!(params[:movie])
-  flash[:notice] = "#{@movie.title} was successfully created."
- redirect_to movies_path
+  @movie = Movie.new(params[:movie])
+  if @movie.save
+    flash[:notice] = "#{@movie.title} was successfully created."
+    redirect_to movies_path
+  else
+    render 'new' # note, 'new' template can access @movie's field values!
+  end
 end
 
 def edit
@@ -25,9 +29,12 @@ end
 
 def update
   @movie = Movie.find params[:id]
-  @movie.update_attributes!(params[:movie])
-  flash[:notice] = "#{@movie.title} was successfully updated."
-  redirect_to movie_path(@movie)
+  if @movie.update_attributes(params[:movie])
+    flash[:notice] = "#{@movie.title} was successfully updated."
+    redirect_to movie_path(@movie)
+  else
+    render 'edit' # note, 'edit' template can access @movie's field values!
+  end
 end
 
 def destroy
